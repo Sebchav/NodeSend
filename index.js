@@ -1,5 +1,6 @@
 const express = require("express");
 const conectarDB = require("./config/db");
+const auth =  require("./middleware/auth");
 
 // Crear el servidor
 const app = express();
