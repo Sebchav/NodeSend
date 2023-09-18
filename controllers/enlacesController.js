@@ -47,3 +47,22 @@ exports.nuevoEnlace = async(req, res, next) => {
         console.log(error);
     }
 }
+
+//Obtener el enlace
+exports.obtenerEnlace = async(req, res, next) => {
+    const { url } = req.params;
+    //Verificar si existe el enlace
+    const enlace = await Enlaces.findOne({url});
+
+    if(!enlace){
+        res.status(404).json({msg: "Ese enlace no existe"});
+        return next();
+    }
+    
+    // Si existe
+    res.json({archivo: enlace.nombre})
+
+    //Si las descargas son iguales a 1
+
+    //Si las descargas son mayores a 1 restar 1
+}
