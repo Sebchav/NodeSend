@@ -11,11 +11,11 @@ exports.nuevoEnlace = async(req, res, next) => {
     }
 
     //Crear un objeto
-    const { nombre_original } = req.body;
+    const { nombre_original, nombre } = req.body;
 
     const enlace = new Enlaces();
     enlace.url = shortid.generate();
-    enlace.nombre = shortid.generate();
+    enlace.nombre = nombre;
     enlace.nombre_original = nombre_original;
 
     // Si el usuario está autenticado
@@ -43,6 +43,16 @@ exports.nuevoEnlace = async(req, res, next) => {
         await enlace.save();
         return res.json({msg: `${enlace.url}`});
         next();
+    }catch(error){
+        console.log(error);
+    }
+}
+
+//Obtiene un listado de todos los enlaces
+exports.todosEnlaces = async(req, res)=>{
+    try{
+        const enlaces = await Enlaces.find({}).select("url -_id");
+        res.json({enlaces})
     }catch(error){
         console.log(error);
     }
